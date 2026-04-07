@@ -2,14 +2,13 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-square="e2"]').waitFor({ timeout: 60000 });
+  // Ждем, пока элемент реально появится
+  await page.waitForSelector('[data-square="e2"]', { state: 'visible', timeout: 120000 });
 });
 
 test('можно выбрать фигуру', async ({ page }) => {
-  const squares = page.locator('[data-square="e2"]');
-  await squares.click();
-  const dots = page.locator('[data-legal="true"]');
-  await expect(dots.first()).toBeVisible();
+  await page.locator('[data-square="e2"]').click();
+  await expect(page.locator('[data-legal="true"]').first()).toBeVisible();
 });
 
 test('можно сделать ход', async ({ page }) => {
