@@ -1,19 +1,20 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './src/tests/e2e',
-  fullyParallel: true,
-  retries: 0,
+  timeout: 120000, 
+  expect: { timeout: 30000 }, 
+  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
   use: {
-    baseURL: 'http://localhost:5173',
     headless: true,
+    viewport: { width: 1280, height: 720 },
+    actionTimeout: 60000, 
+    baseURL: 'http://localhost:5173',
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-  ],
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:5173',
-    reuseExistingServer: true,
+    port: 5173,
+    timeout: 120000, 
+    reuseExistingServer: true, 
   },
 });

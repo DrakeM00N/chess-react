@@ -56,7 +56,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <h1 className="title">Chess vs AI</h1>
-      <p className="subtitle">Minimax · Alpha-Beta Pruning</p>
+      <p className="subtitle">Minimax · Prepair your skill</p>
 
       <div className="game-layout">
         {/* Board */}
