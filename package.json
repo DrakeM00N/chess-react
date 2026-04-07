@@ -17,24 +17,25 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "chess.js": "^1.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "chess.js": "^1.4.0",
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "vitest": "^4.1.2",
-    "@vitest/ui": "^4.1.2",
-    "typescript": "^4.9.5",
+    "@playwright/test": "^1.59.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^14.6.1",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@types/node": "^25.5.2",
+    "@vitejs/plugin-react": "^5.0.0",
+    "@vitest/ui": "^4.1.2",
     "jest": "^26.6.0",
     "jsdom": "^29.0.1",
     "playwright": "^1.59.1",
-    "@playwright/test": "^1.59.1"
+    "typescript": "^4.9.5",
+    "vite": "^5.0.0",
+    "vitest": "^4.1.2"
   },
   "eslintConfig": {
     "extends": [
