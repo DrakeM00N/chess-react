@@ -11,25 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
+      # 1. Клонируем репозиторий
+      - name: 📥 Checkout repo
         uses: actions/checkout@v3
 
+      # 2. Устанавливаем Node 20
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3. Чистая установка зависимостей (lockfile под Linux)
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🧪 Run unit tests (Vitest)
+      # 4. Запускаем unit тесты (Vitest)
+      - name: 🧪 Run unit tests
         run: npm run test -- --run
 
+      # 5. Устанавливаем браузеры для Playwright
       - name: 🌐 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: 🤖 Run E2E tests (Playwright)
+      # 6. Запускаем E2E тесты
+      # Для Playwright нужен запущенный dev-сервер:
+      - name: ▶️ Start dev server
+        run: npm run dev &
+      - name: ⏳ Wait for dev server
+        run: npx wait-on http://localhost:5173
+      - name: 🤖 Run E2E tests
         run: npm run test:e2e
 
+      # 7. Сборка проекта
       - name: 🏗 Build project
         run: npm run build
