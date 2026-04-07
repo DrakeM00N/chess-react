@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Chess, Move, Square } from 'chess.js';
 import { Difficulty, GameState, MoveResult, PieceType } from '../types/chess.types';
-import { getBestMove } from '../utils/ai';
+import { getBestMoveWorker } from '../utils/ai';
 
 interface UseChessReturn {
   chess: Chess;
@@ -73,18 +73,17 @@ export function useChess(): UseChessReturn {
   }, []);
 
   const doAiMove = useCallback(() => {
-    const chess = chessRef.current;
-    if (chess.isGameOver() || chess.turn() === playerColor) return;
-    setIsAiThinking(true);
-    setTimeout(() => {
-      const move = getBestMove(chess, difficulty);
-      if (move) {
-        chess.move(move);
-        syncState();
-      }
-      setIsAiThinking(false);
-    }, 100);
-  }, [difficulty, playerColor, syncState]);
+  const chess = chessRef.current;
+  if (chess.isGameOver() || chess.turn() === playerColor) return;
+  setIsAiThinking(true);
+  getBestMoveWorker(chess, difficulty, (move) => {
+    if (move) {
+      chess.move(move);
+      syncState();
+    }
+    setIsAiThinking(false);
+  });
+}, [difficulty, playerColor, syncState]);
 
   const [pendingPromotion, setPendingPromotion] = useState<{ from: string; to: string } | null>(null);
 
